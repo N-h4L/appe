@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.git/
+node_modules/
+.venv/
+venv/
+env/
+coverage/
+.pytest_cache/
+.mypy_cache/
+.DS_Store
+AI_HANDOFF.md
+test/
+server.log
+server.err

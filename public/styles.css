@@ -1,0 +1,116 @@
+:root {
+  color-scheme: light dark;
+  --bg: #f7f7f2;
+  --text: #1e2329;
+  --muted: #5e6875;
+  --panel: #ffffff;
+  --line: #dfe3e6;
+  --accent: #177e89;
+  --accent-strong: #11616a;
+  --ok: #2f9e44;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background:
+    linear-gradient(135deg, rgba(23, 126, 137, 0.16), transparent 36%),
+    linear-gradient(315deg, rgba(219, 84, 97, 0.14), transparent 38%),
+    var(--bg);
+}
+
+.shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.panel {
+  width: min(100%, 640px);
+  padding: clamp(28px, 5vw, 56px);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--panel) 92%, transparent);
+  box-shadow: 0 18px 70px rgba(30, 35, 41, 0.12);
+}
+
+.status-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 28px;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--muted);
+}
+
+.status-row.is-ok .status-dot {
+  background: var(--ok);
+  box-shadow: 0 0 0 5px rgba(47, 158, 68, 0.12);
+}
+
+h1 {
+  margin: 28px 0 12px;
+  font-size: clamp(2.8rem, 12vw, 6rem);
+  line-height: 0.95;
+}
+
+.lede {
+  max-width: 46ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.15rem;
+  line-height: 1.6;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.actions a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  color: #ffffff;
+  background: var(--accent);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.actions a:hover,
+.actions a:focus-visible {
+  background: var(--accent-strong);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #171a1f;
+    --text: #f6f7f8;
+    --muted: #bac2cc;
+    --panel: #20252c;
+    --line: #38414a;
+  }
+}

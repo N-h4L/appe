@@ -51,6 +51,7 @@ let gameInterval = null;
 let isPlaying = false;
 let gameSpeed = 120; // Time step in ms
 let lastTime = 0;
+const WIN_SCORE = 500;
 
 // Initialize high score display
 highScoreEl.textContent = highScore;
@@ -166,6 +167,20 @@ function gameOver() {
   overlay.classList.remove("hidden");
 }
 
+function gameWin() {
+  isPlaying = false;
+  if (score > highScore) {
+    highScore = score;
+    localStorage.setItem("appe-snake-high-score", highScore.toString());
+    highScoreEl.textContent = highScore;
+  }
+  
+  overlayTitle.textContent = "Victory!";
+  overlayMsg.textContent = `You reached the target score of ${WIN_SCORE} points!`;
+  startBtn.textContent = "Play Again";
+  overlay.classList.remove("hidden");
+}
+
 function update() {
   // Update direction
   dx = nextDx;
@@ -174,10 +189,17 @@ function update() {
   // Move snake head
   const head = { x: snake[0].x + dx, y: snake[0].y + dy };
 
-  // Collision checks
-  if (head.x < 0 || head.x >= TILE_COUNT || head.y < 0 || head.y >= TILE_COUNT) {
-    gameOver();
-    return;
+  // Wrap snake coordinates on boundaries
+  if (head.x < 0) {
+    head.x = TILE_COUNT - 1;
+  } else if (head.x >= TILE_COUNT) {
+    head.x = 0;
+  }
+
+  if (head.y < 0) {
+    head.y = TILE_COUNT - 1;
+  } else if (head.y >= TILE_COUNT) {
+    head.y = 0;
   }
 
   // Self collision
@@ -194,6 +216,10 @@ function update() {
   if (head.x === food.x && head.y === food.y) {
     score += 10;
     scoreEl.textContent = score;
+    if (score >= WIN_SCORE) {
+      gameWin();
+      return;
+    }
     spawnFood();
   } else {
     snake.pop();

@@ -156,6 +156,18 @@ Appe is now a simple container-ready Node.js web app. It serves a static page, a
 - Blockers: None.
 - Recommended next step: Monitor build logs in GitHub Actions.
 
+### 2026-05-21 - Snake Game Update: Screen Wrapping & Win Target
+
+- Model/assistant: Gemini 3.5 Flash (High)
+- User request: update snake game rules for border wrapping, self-collision only game over, and win condition score target.
+- Summary of work: Updated `public/app.js` and `public/index.html` to support the new rules. The snake wraps coordinates at canvas borders, game ends only on self-collision, and added a target win scoreboard displaying "500" where a score >= 500 triggers a "Victory!" screen. Stopped, rebuilt, and restarted the local Docker container.
+- Files changed: `public/app.js`, `public/index.html`, `walkthrough.md`, `task.md`, `AI_HANDOFF.md`, `ai_handoff_2.md`
+- Commands run: `npm test`, `docker stop`, `docker rm`, `docker build`, `docker run`
+- Tests/checks: Automated tests passed. Browser subagent verified wrapping behavior and Target score box.
+- Current status: Updated game rules are live in the local Docker container.
+- Blockers: None.
+- Recommended next step: Git add, commit, and push these new game updates to GitHub.
+
 ## Code Change Log
 
 ### 2026-05-21
@@ -264,6 +276,10 @@ Appe is now a simple container-ready Node.js web app. It serves a static page, a
 | `git push` (retry) | Failed due to missing PAT `workflow` scope. |
 | `git remote set-url origin ...` | Configured git remote with new PAT. |
 | `git push` | Pushed workflow changes to remote successfully. |
+| `git push --force` | Force pushed to overwrite remote branch. |
+| `docker stop appe-snake-container; docker rm appe-snake-container` | Stopped and removed previous docker container. |
+| `docker build -t appe-snake .` | Built updated container image. |
+| `docker run -d -p 8000:8000 --name appe-snake-container appe-snake` | Ran container with new game rules. |
 
 ## Current File Map
 

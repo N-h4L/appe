@@ -120,6 +120,18 @@ Appe is now a simple container-ready Node.js web app. It serves a static page, a
 - Blockers: None.
 - Recommended next step: Deploy the built container to Render or a container registry.
 
+### 2026-05-21 - Git Push & Live Deploy Verification
+
+- Model/assistant: Gemini 3.5 Flash (High)
+- User request: push code to GitHub and check live deployment on Render.
+- Summary of work: Resolved push rejection by pulling remote commits (which added `.github/workflows/webpack.yml`). Pushed all code modifications to GitHub. Verified that Render automatically detected the git push and built/deployed the new Snake Game to the live site at `https://appe-rdxs.onrender.com`.
+- Files changed: `AI_HANDOFF.md`, `ai_handoff_2.md`
+- Commands run: `git status`, `git add .`, `git commit`, `git pull`, `git push`
+- Tests/checks: Browser subagent verified the live game at `https://appe-rdxs.onrender.com` renders, runs loops, and handles keyboard inputs correctly.
+- Current status: Code is fully synchronized with GitHub, and the live application on Render is now successfully hosting the Snake Game.
+- Blockers: None.
+- Recommended next step: Update `.github/workflows/webpack.yml` to remove the webpack compilation test step, as the project uses vanilla Node.js.
+
 ## Code Change Log
 
 ### 2026-05-21
@@ -218,6 +230,11 @@ Appe is now a simple container-ready Node.js web app. It serves a static page, a
 | `docker build -t appe-snake .` | Successfully built the Docker image with alpine-node. |
 | `docker run -d -p 8000:8000 --name appe-snake-container appe-snake` | Ran container in detached mode. |
 | `docker ps` | Verified container is up and running on port 8000. |
+| `git status` | Inspected repository modifications. |
+| `git add .` | Staged changed files. |
+| `git commit -m "..."` | Committed changes locally. |
+| `git pull` | Merged remote additions (`webpack.yml`) to resolve merge conflicts. |
+| `git push` | Pushed local branch commits to origin/main. |
 
 ## Current File Map
 

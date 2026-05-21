@@ -53,6 +53,11 @@ let gameSpeed = 120; // Time step in ms
 let lastTime = 0;
 const WIN_SCORE = 500;
 
+// Swipe Gesture Coordinates
+let touchStartX = 0;
+let touchStartY = 0;
+const SWIPE_THRESHOLD = 30;
+
 // Initialize high score display
 highScoreEl.textContent = highScore;
 
@@ -136,11 +141,56 @@ window.addEventListener("keydown", (e) => {
   }
 });
 
-// Mobile Controls
+// Mobile Controls (D-pad)
 ctrlUp.addEventListener("click", () => isPlaying && handleInput(0, -1));
 ctrlDown.addEventListener("click", () => isPlaying && handleInput(0, 1));
 ctrlLeft.addEventListener("click", () => isPlaying && handleInput(-1, 0));
 ctrlRight.addEventListener("click", () => isPlaying && handleInput(1, 0));
+
+// Touch Screen Swipe Gestures
+canvas.addEventListener("touchstart", (e) => {
+  if (!isPlaying) return;
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+canvas.addEventListener("touchmove", (e) => {
+  // Prevent page scrolling when swiping inside the game board
+  if (isPlaying) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
+canvas.addEventListener("touchend", (e) => {
+  if (!isPlaying) return;
+
+  const touchEndX = e.changedTouches[0].clientX;
+  const touchEndY = e.changedTouches[0].clientY;
+
+  const diffX = touchEndX - touchStartX;
+  const diffY = touchEndY - touchStartY;
+
+  // Verify swipe distance is long enough
+  if (Math.max(Math.abs(diffX), Math.abs(diffY)) < SWIPE_THRESHOLD) {
+    return;
+  }
+
+  if (Math.abs(diffX) > Math.abs(diffY)) {
+    // Horizontal Swipe
+    if (diffX > 0) {
+      handleInput(1, 0); // Right
+    } else {
+      handleInput(-1, 0); // Left
+    }
+  } else {
+    // Vertical Swipe
+    if (diffY > 0) {
+      handleInput(0, 1); // Down
+    } else {
+      handleInput(0, -1); // Up
+    }
+  }
+}, { passive: true });
 
 startBtn.addEventListener("click", startGame);
 

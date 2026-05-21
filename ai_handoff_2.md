@@ -173,6 +173,30 @@ Appe is now a simple container-ready Node.js web app. It serves a static page, a
 - Blockers: None.
 - Recommended next step: Git add, commit, and push these new game updates to GitHub.
 
+### 2026-05-21 - Snake Game Update: Android Touch Gestures Support
+
+- Model/assistant: Gemini 3.5 Flash (High)
+- User request: implement touch screen gestures for Android/mobile screen swipe controls.
+- Summary of work: Implemented touch start, touch move, and touch end handlers in `public/app.js` on the Canvas component to capture horizontal and vertical swipe gestures. Added default scrolling override to prevent touchmove scrolling issues when active. Stopped, rebuilt, and restarted the local Docker container.
+- Files changed: `public/app.js`, `walkthrough.md`, `task.md`, `AI_HANDOFF.md`, `ai_handoff_2.md`
+- Commands run: `npm test`, `docker stop`, `docker rm`, `docker build`, `docker run`
+- Tests/checks: Automated test suite passed successfully.
+- Current status: Gesture controllers are live in the local container.
+- Blockers: None.
+- Recommended next step: Git commit and push updates to GitHub repository.
+
+### 2026-05-21 - Future Update Recommendations
+
+- Model/assistant: Gemini 3.1 Pro (High)
+- User request: asked for future update recommendations for the snake game.
+- Summary of work: Provided strategic recommendations spanning gameplay enhancements (progressive difficulty, power-ups, sound effects), UI/UX polish (pause functionality, particle effects), and backend improvements (global leaderboard, automated deploy previews).
+- Files changed: `AI_HANDOFF.md`, `ai_handoff_2.md`
+- Commands run: None.
+- Tests/checks: N/A.
+- Current status: Project is stable; waiting on user to select next feature.
+- Blockers: None.
+- Recommended next step: Implement selected future updates.
+
 ## Code Change Log
 
 ### 2026-05-21

@@ -1,6 +1,11 @@
-# AI Handoff Log
+# AI Handoff Log 2
 
 This file is the continuity record for AI assistants working in this project. Keep it updated so another model can resume the work after a credit limit, context reset, or handoff.
+
+## Protocols
+
+1. **Always Record Logs:** Every AI assistant must update this file during each work session. At minimum, add a `Session Log` entry before finishing. If any files, commands, tests, decisions, blockers, or next steps changed, update the matching sections too.
+2. **Never Remove Previous Entries:** Do not delete or overwrite historical logs unless explicitly required or requested by the user. Append new session logs chronologically.
 
 ## Standing Workflow Rule
 

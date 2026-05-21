@@ -80,20 +80,20 @@ function createServer() {
       return;
     }
 
-    if (requestUrl.pathname === "/health") {
-      sendJson(response, 200, { status: "ok", service: APP_NAME, version: APP_VERSION });
-      return;
-    }
-
-    if (requestUrl.pathname === "/api/info") {
-      sendJson(response, 200, {
-        name: APP_NAME,
-        version: APP_VERSION,
-        message: "Container-ready starter app is running.",
-        endpoints: ["/", "/health", "/api/info"],
-      });
-      return;
-    }
+// #     if (requestUrl.pathname === "/health") {
+// #       sendJson(response, 200, { status: "ok", service: APP_NAME, version: APP_VERSION });
+// #       return;
+// #     }
+// # 
+// #     if (requestUrl.pathname === "/api/info") {
+// #       sendJson(response, 200, {
+// #         name: APP_NAME,
+// #         version: APP_VERSION,
+// #         message: "Container-ready starter app is running.",
+// #         endpoints: ["/", "/health", "/api/info"],
+// #       });
+// #       return;
+// #     }
 
     serveStaticFile(response, requestUrl.pathname);
   });

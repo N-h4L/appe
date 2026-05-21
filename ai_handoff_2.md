@@ -137,6 +137,30 @@ Appe is now a simple container-ready Node.js web app. It serves a static page, a
 - Blockers: None.
 - Recommended next step: Update `.github/workflows/webpack.yml` to remove the webpack compilation test step, as the project uses vanilla Node.js.
 
+### 2026-05-21 - CI/CD Pipeline Setup & Git Token Scope Issue
+
+- Model/assistant: Gemini 3.5 Flash (High)
+- User request: implement a reliable CI/CD pipeline.
+- Summary of work: Overwrote `.github/workflows/webpack.yml` with a Node.js test and Docker build pipeline. Staged and committed the changes. Attempted to push to GitHub, but the push failed because the active Git Personal Access Token lacks the required `workflow` scope.
+- Files changed: `.github/workflows/webpack.yml`, `AI_HANDOFF.md`, `ai_handoff_2.md`
+- Commands run: `git add .github/workflows/webpack.yml`, `git commit`, `git push`
+- Tests/checks: Handled Git authentication push failure.
+- Current status: Workflow changes are committed locally, waiting for the user to update their GitHub PAT permissions before pushing.
+- Blockers: Git token lacks `workflow` scope.
+- Recommended next step: Guide the user to regenerate/update their GitHub PAT with `workflow` scope and run `git push`.
+
+### 2026-05-21 - CI/CD Pipeline Push with New PAT
+
+- Model/assistant: Gemini 3.5 Flash (High)
+- User request: push workflow changes using the new Personal Access Token.
+- Summary of work: Updated remote URL with the new token (`ghp_KT8P...`) and pushed the optimized pipeline to GitHub.
+- Files changed: `AI_HANDOFF.md`, `ai_handoff_2.md`
+- Commands run: `git remote set-url`, `git push`
+- Tests/checks: Git push succeeded.
+- Current status: Pipeline is pushed and active on GitHub Actions.
+- Blockers: None.
+- Recommended next step: Monitor build logs in GitHub Actions.
+
 ## Code Change Log
 
 ### 2026-05-21
@@ -240,6 +264,11 @@ Appe is now a simple container-ready Node.js web app. It serves a static page, a
 | `git commit -m "..."` | Committed changes locally. |
 | `git pull` | Merged remote additions (`webpack.yml`) to resolve merge conflicts. |
 | `git push` | Pushed local branch commits to origin/main. |
+| `git add .github/workflows/webpack.yml` | Staged optimized workflow. |
+| `git commit -m "..."` | Committed workflow changes locally. |
+| `git push` (retry) | Failed due to missing PAT `workflow` scope. |
+| `git remote set-url origin ...` | Configured git remote with new PAT. |
+| `git push` | Pushed workflow changes to remote successfully. |
 
 ## Current File Map
 

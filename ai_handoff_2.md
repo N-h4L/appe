@@ -185,6 +185,18 @@ Appe is now a simple container-ready Node.js web app. It serves a static page, a
 - Blockers: None.
 - Recommended next step: Git commit and push updates to GitHub repository.
 
+### 2026-05-21 - PC Shutdown and Web Hosting Explanation
+
+- Model/assistant: Gemini 3.1 Pro (High)
+- User request: asked if shutting down the PC stops the game on the web.
+- Summary of work: Explained the cloud architecture to the user. Clarified that the public game at `appe-rdxs.onrender.com` runs on Render's remote cloud servers and will remain live 24/7, completely unaffected by the local PC's power state.
+- Files changed: `AI_HANDOFF.md`, `ai_handoff_2.md`
+- Commands run: None.
+- Tests/checks: N/A.
+- Current status: Project is stable and deployed.
+- Blockers: None.
+- Recommended next step: None.
+
 ### 2026-05-21 - Future Update Recommendations
 
 - Model/assistant: Gemini 3.1 Pro (High)
@@ -197,7 +209,26 @@ Appe is now a simple container-ready Node.js web app. It serves a static page, a
 - Blockers: None.
 - Recommended next step: Implement selected future updates.
 
+### 2026-05-22 - Snake Game Update: Difficulty & Sound
+
+- Model/assistant: Gemini 3.1 Pro (High)
+- User request: read ai_handoff_2.md and install all the tools needed and start where it left off
+- Summary of work: Verified Node and Docker installations. Checked previous project status, then implemented Progressive Difficulty (speed scaling) and Web Audio API synthesized Sound Effects into the Snake game, addressing the previously recommended next steps.
+- Files changed: `public/app.js`, `ai_handoff_2.md`
+- Commands run: `node -v`, `docker info`, `npm install`, `git status`, `git log -n 5`, `npm test`
+- Tests/checks: `npm test` (passed 2/2).
+- Current status: New features (difficulty scaling and sound effects) are live locally.
+- Blockers: Docker daemon is currently not running, but local Node development is unaffected.
+- Recommended next step: Git commit and push updates to GitHub repository, then check Render deployment.
+
 ## Code Change Log
+
+### 2026-05-22
+
+- Changed `public/app.js`.
+  - What changed: Added Web Audio API `AudioContext` functions for game sounds, initialized on start. Added progressive speed scaling using `gameSpeed` logic in the update cycle.
+  - Why: Enhance gameplay experience with audio feedback and scaling difficulty based on score.
+  - Risk/notes: Audio context may remain suspended if not triggered by a user gesture, so it is bound to the start button.
 
 ### 2026-05-21
 
@@ -310,6 +341,16 @@ Appe is now a simple container-ready Node.js web app. It serves a static page, a
 | `docker build -t appe-snake .` | Built updated container image. |
 | `docker run -d -p 8000:8000 --name appe-snake-container appe-snake` | Ran container with new game rules. |
 
+### 2026-05-22
+
+| Command | Result |
+| --- | --- |
+| `node -v` | Confirmed v24.11.0 |
+| `docker info` | Docker daemon is not running locally |
+| `npm install` | Packages up to date |
+| `git status`, `git log -n 5` | Checked repository status and commit history |
+| `npm test` | Passed 2/2 tests successfully |
+
 ## Current File Map
 
 ```text
@@ -339,8 +380,8 @@ D:\Appe
 
 ## Next Steps
 
-1. Deploy the updated Snake Game container to Render to reflect the new functionality.
-2. Consider adding features to the Snake Game, such as difficulty levels (speed adjustment), sound effects, or database integration for a global high scoreboard.
+1. Commit and push the new Game Difficulty and Sound Effects updates to GitHub.
+2. Verify Render has built and deployed the changes successfully.
 3. After each work session, update this file with:
    - user request,
    - files changed,

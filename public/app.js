@@ -58,6 +58,54 @@ let touchStartX = 0;
 let touchStartY = 0;
 const SWIPE_THRESHOLD = 30;
 
+// --- Sound System ---
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx;
+
+function initAudio() {
+  if (!audioCtx) {
+    audioCtx = new AudioCtx();
+  }
+}
+
+function playTone(freq, type, duration, vol=0.1) {
+  if (!audioCtx) return;
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+  
+  gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+  
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  
+  osc.start();
+  osc.stop(audioCtx.currentTime + duration);
+}
+
+function playEatSound() {
+  playTone(600, 'sine', 0.1, 0.1);
+  setTimeout(() => playTone(800, 'sine', 0.15, 0.1), 50);
+}
+
+function playGameOverSound() {
+  playTone(300, 'sawtooth', 0.5, 0.1);
+  setTimeout(() => playTone(250, 'sawtooth', 0.5, 0.1), 200);
+  setTimeout(() => playTone(200, 'sawtooth', 0.8, 0.1), 400);
+}
+
+function playWinSound() {
+  playTone(400, 'square', 0.1, 0.05);
+  setTimeout(() => playTone(500, 'square', 0.1, 0.05), 100);
+  setTimeout(() => playTone(600, 'square', 0.1, 0.05), 200);
+  setTimeout(() => playTone(800, 'square', 0.4, 0.05), 300);
+}
+
 // Initialize high score display
 highScoreEl.textContent = highScore;
 
@@ -73,6 +121,7 @@ function resetGame() {
   nextDy = 0;
   score = 0;
   scoreEl.textContent = score;
+  gameSpeed = 120; // Reset speed on new game
   spawnFood();
 }
 
@@ -196,6 +245,7 @@ startBtn.addEventListener("click", startGame);
 
 function startGame() {
   if (isPlaying) return;
+  initAudio(); // Initialize audio context on user gesture
   overlay.classList.add("hidden");
   resetGame();
   isPlaying = true;
@@ -205,6 +255,7 @@ function startGame() {
 
 function gameOver() {
   isPlaying = false;
+  playGameOverSound();
   if (score > highScore) {
     highScore = score;
     localStorage.setItem("appe-snake-high-score", highScore.toString());
@@ -219,6 +270,7 @@ function gameOver() {
 
 function gameWin() {
   isPlaying = false;
+  playWinSound();
   if (score > highScore) {
     highScore = score;
     localStorage.setItem("appe-snake-high-score", highScore.toString());
@@ -266,10 +318,19 @@ function update() {
   if (head.x === food.x && head.y === food.y) {
     score += 10;
     scoreEl.textContent = score;
+    
     if (score >= WIN_SCORE) {
       gameWin();
       return;
     }
+    
+    playEatSound();
+    
+    // Progressive Difficulty: Increase speed slightly with score
+    const minSpeed = 50;
+    const speedDecrease = Math.floor(score / 50) * 5; // Drops 5ms every 50 points
+    gameSpeed = Math.max(minSpeed, 120 - speedDecrease);
+
     spawnFood();
   } else {
     snake.pop();

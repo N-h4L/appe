@@ -180,6 +180,18 @@ Appe is now a simple container-ready Node.js web app. It serves a static page, a
 - Blockers: None.
 - Recommended next step: Git commit and push updates to GitHub repository.
 
+### 2026-05-21 - PC Shutdown and Web Hosting Explanation
+
+- Model/assistant: Gemini 3.1 Pro (High)
+- User request: asked if shutting down the PC stops the game on the web.
+- Summary of work: Explained the cloud architecture to the user. Clarified that the public game at `appe-rdxs.onrender.com` runs on Render's remote cloud servers and will remain live 24/7, completely unaffected by the local PC's power state.
+- Files changed: `AI_HANDOFF.md`, `ai_handoff_2.md`
+- Commands run: None.
+- Tests/checks: N/A.
+- Current status: Project is stable and deployed.
+- Blockers: None.
+- Recommended next step: None.
+
 ### 2026-05-21 - Future Update Recommendations
 
 - Model/assistant: Gemini 3.1 Pro (High)
